@@ -10,7 +10,7 @@
 struct HelpfulItem : Item
 {
     HelpfulItem() : Item("helpful item", 2) { }
-    ~HelpfulItem() : ~Item() { } override;
+    ~HelpfulItem() override;
     void use(Character* character) override;
 };
 
