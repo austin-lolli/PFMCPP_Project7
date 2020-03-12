@@ -13,4 +13,3 @@ struct HelpfulItem : Item
     ~HelpfulItem() override;
     void use(Character* character) override;
 };
-

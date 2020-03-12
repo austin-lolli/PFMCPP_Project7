@@ -3,7 +3,7 @@
 
 struct Dwarf : Character
 {
-    Dwarf( const std::string& name_, int hp, int armor ) : Character( name_, hp, armor);
+    Dwarf( const std::string& name_, int hp, int armor );
     const std::string& getName() override;
     std::string getStats() override;
 private:

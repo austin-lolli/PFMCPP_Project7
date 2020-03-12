@@ -1,4 +1,5 @@
 #include "Character.h"
+#include "Utility.h"
 #include <iostream>
 #include <vector>
 
@@ -100,25 +101,12 @@ void Character::attackInternal(Character& other)
         // consolidated steps, boost the initial value of stats by 10%
         *initialHitPoints *= 1.1;
         *initialArmorLevel *= 1.1;
-        *intiialAttackDamage *= 1.1;
+        *initialAttackDamage *= 1.1;
         // then restore characters hit points
-        Character.hitPoints = *initialHitPoints;
-        Character.armor = *initialArmorLevel;
-        Character.attackDamage = *intiialAttackDamage;
+        this->hitPoints = *initialHitPoints;
+        this->armor = *initialArmorLevel;
+        this->attackDamage = *initialAttackDamage;
 
         std::cout << getName() << " defeated " << other.getName() << " and leveled up!" << std::endl;        
     }
-}
-
-void Character::printStats()
-{
-    std::cout << getName() << "'s stats: " << std::endl;
-    getCharacterStats(this);
-    /*
-    make your getStats() use a function from the Utility.h
-    */
-    std::cout << getStats(); 
-    
-    std::cout << std::endl;
-    std::cout << std::endl;
 }
