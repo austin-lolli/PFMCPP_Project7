@@ -101,7 +101,7 @@ void Character::attackInternal(Character& other)
             a) your stats are restored to their initial value if they are lower than it.
             b) your stats are boosted 10%
             c) the initial value of your stats is updated to reflect this boosted stat for the next time you defeat another character.
-      */
+       */
         // stats lower than initial check
         if ( hitPoints < *initialHitPoints )
         {
@@ -118,10 +118,10 @@ void Character::attackInternal(Character& other)
             attackDamage = *initialAttackDamage;
         }
 
-        // boost stats by 10%
-        hitPoints *= statBoost;
-        armor *= statBoost;
-        attackDamage *= statBoost;
+        // added the +0.5 so that stats between 5 and 9 would still boost
+        hitPoints = (statBoost * hitPoints) + 0.5;
+        armor = (statBoost * armor) + 0.5;
+        attackDamage = (statBoost * attackDamage) + 0.5;
 
         // initial values set to boosted stat value
         *initialHitPoints = hitPoints;

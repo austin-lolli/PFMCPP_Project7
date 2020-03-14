@@ -20,6 +20,7 @@ void DragonSlayer::attack(Character& other)
         //DragonSlayers get a 10x boost when attacking dragons, from their attack item.
         //so they should USE their attack item before attacking the dragon... 
         attackItem->use(this);
+        attackItem.reset();
 
         while( dragon->getHP() > 0 )
         {
