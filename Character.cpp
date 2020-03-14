@@ -2,9 +2,12 @@
 #include "Utility.h"
 #include <iostream>
 #include <vector>
+#include <stdlib.h> 
+#include <time.h> 
 
 #include "DefensiveItem.h"
 #include "HelpfulItem.h"
+#include "AttackItem.h"
 
 Character::Character(int hp, int armor_, int attackDamage_ ) :
     hitPoints(hp),
@@ -90,6 +93,7 @@ int Character::takeDamage(int damage)
 
 void Character::attackInternal(Character& other)
 {
+    double statBoost = 1.1;
     if( other.hitPoints <= 0 )
     {
         /*
@@ -98,6 +102,26 @@ void Character::attackInternal(Character& other)
             b) your stats are boosted 10%
             c) the initial value of your stats is updated to reflect this boosted stat for the next time you defeat another character.
       */
+        if ( hitPoints < *initialHitPoints )
+        {
+            hitPoints = *initialHitPoints;
+        }
+
+        if ( armor < *initialArmorLevel )
+        {
+            armor = *initialArmorLevel;
+        }
+        
+        if ( attackDamage < *initialAttackDamage )
+        {
+            attackDamage = *initialAttackDamage;
+        }
+
+        *initialHitPoints = (hitPoints *= statBoost);
+        *initialArmorLevel = (armor *= statBoost);
+        *initialAttackDamage = (attackDamage *= statBoost);
+
+      /*
         // consolidated steps, boost the initial value of stats by 10%
         *initialHitPoints *= 1.1;
         *initialArmorLevel *= 1.1;
@@ -106,7 +130,22 @@ void Character::attackInternal(Character& other)
         this->hitPoints = *initialHitPoints;
         this->armor = *initialArmorLevel;
         this->attackDamage = *initialAttackDamage;
-
+*/
         std::cout << getName() << " defeated " << other.getName() << " and leveled up!" << std::endl;        
     }
+}
+
+// added function to follow DRY Principle
+void Character::generateItems()
+{
+    int numberOfHelpfulItems;
+    int numberOfDefensiveItems;
+    srand (time (nullptr));
+
+    numberOfHelpfulItems = rand() % 3 + 1;
+    numberOfDefensiveItems = rand() % 3 + 1;
+
+    helpfulItems = makeHelpfulItems(numberOfHelpfulItems);
+    defensiveItems = makeDefensiveItems(numberOfDefensiveItems);
+
 }

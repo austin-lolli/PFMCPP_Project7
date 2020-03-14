@@ -4,7 +4,7 @@
 
 Dwarf::Dwarf( const std::string& name_, int hp, int armor ) : Character( hp, armor, 4 ), name(name_)
 {
-
+    this->generateItems();
 }
 
 const std::string& Dwarf::getName()
