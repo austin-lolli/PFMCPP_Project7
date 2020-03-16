@@ -1,7 +1,17 @@
 #include "Paladin.h"
+#include "Utility.h"
 
-// Paladin::Paladin
+Paladin::Paladin( const std::string& name_, int hp, int armor ) : Character( hp, armor, 10 ), name(name_)
+{  
+    this->generateItems();
+}
 
-// Paladin::getName
+const std::string& Paladin::getName()
+{
+    return this->name;
+}
 
-// Paladin::getStats
+std::string Paladin::getStats()
+{
+    return getCharacterStats(this);
+}

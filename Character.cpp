@@ -1,9 +1,13 @@
 #include "Character.h"
+#include "Utility.h"
 #include <iostream>
 #include <vector>
+#include <stdlib.h> 
+#include <time.h> 
 
 #include "DefensiveItem.h"
 #include "HelpfulItem.h"
+#include "AttackItem.h"
 
 Character::Character(int hp, int armor_, int attackDamage_ ) :
     hitPoints(hp),
@@ -87,31 +91,58 @@ int Character::takeDamage(int damage)
 }
 
 
-#include <assert>
 void Character::attackInternal(Character& other)
 {
+    double statBoost = 1.1;
     if( other.hitPoints <= 0 )
     {
         /*
         When you defeat another Character: 
-            a) your stats are restored to their initial value
+            a) your stats are restored to their initial value if they are lower than it.
             b) your stats are boosted 10%
             c) the initial value of your stats is updated to reflect this boosted stat for the next time you defeat another character.
-      */
-        assert(false);
+       */
+        // stats lower than initial check
+        if ( hitPoints < *initialHitPoints )
+        {
+            hitPoints = *initialHitPoints;
+        }
+
+        if ( armor < *initialArmorLevel )
+        {
+            armor = *initialArmorLevel;
+        }
+        
+        if ( attackDamage < *initialAttackDamage )
+        {
+            attackDamage = *initialAttackDamage;
+        }
+
+        // added the +0.5 so that stats between 5 and 9 would still boost
+        hitPoints = (statBoost * hitPoints) + 0.5;
+        armor = (statBoost * armor) + 0.5;
+        attackDamage = (statBoost * attackDamage) + 0.5;
+
+        // initial values set to boosted stat value
+        *initialHitPoints = hitPoints;
+        *initialArmorLevel = armor;
+        *initialAttackDamage = attackDamage;
+
         std::cout << getName() << " defeated " << other.getName() << " and leveled up!" << std::endl;        
     }
 }
 
-void Character::printStats()
+// added function to follow DRY Principle
+void Character::generateItems()
 {
-    std::cout << getName() << "'s stats: " << std::endl;
-    assert(false);
-    /*
-    make your getStats() use a function from the Utility.h
-    */
-    std::cout << getStats(); 
-    
-    std::cout << std::endl;
-    std::cout << std::endl;
+    int numberOfHelpfulItems;
+    int numberOfDefensiveItems;
+    srand (time (nullptr));
+
+    numberOfHelpfulItems = rand() % 3 + 1;
+    numberOfDefensiveItems = rand() % 3 + 1;
+
+    helpfulItems = makeHelpfulItems(numberOfHelpfulItems);
+    defensiveItems = makeDefensiveItems(numberOfDefensiveItems);
+
 }

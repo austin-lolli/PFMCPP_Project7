@@ -31,10 +31,13 @@ struct Character
     int getArmorLevel() const { return armor; }
     int getAttackDamage() const { return attackDamage; }
     bool getIsDefending() const { return isDefending; }
+
+    // added for step 6
+    void generateItems();
     
     const std::vector<std::unique_ptr<Item>>& getHelpfulItems() const { return helpfulItems; }
     const std::vector<std::unique_ptr<Item>>& getDefensiveItems() const { return defensiveItems; }
-    
+
     void boostArmor( int amount )
     {
         armor += amount;
@@ -69,6 +72,5 @@ protected:
     bool isDefending = false;
 private:
     std::unique_ptr<int> initialHitPoints, initialArmorLevel, initialAttackDamage;
-    
     void attackInternal(Character& other);
 };
